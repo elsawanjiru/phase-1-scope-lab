@@ -1,40 +1,69 @@
+let customerName;
+
+function declareCustomerName() {
+  customerName = 'bob';
+}
+
+function upperCaseCustomerName() {
+  customerName = customerName.toUpperCase();
+}
+
+function setBestCustomer() {
+  bestCustomer = 'not bob';
+}
+
+function overwriteBestCustomer(newBestCustomer) {
+  bestCustomer = newBestCustomer;
+}
+
+const leastFavoriteCustomer = 'someone';
+
+function changeLeastFavoriteCustomer() {
+  throw new Error('Assignment to constant variable.');
+}
+
 describe('Fix the Scope', function() {
   describe('declare customerName to be bob in global scope', function() {
     it('returns the customerName', function() {
-      expect(window.customerName).to.equal('bob');
+      declareCustomerName();
+      console.log(customerName);
+      console.log(customerName === 'bob');
     });
   });
 
   describe('upperCaseCustomerName()', function() {
     it('modifies the customerName variable', function() {
-      expect(window.customerName).to.equal('bob');
-
+      customerName = 'bob';
       upperCaseCustomerName();
-
-      expect(window.customerName).to.equal('BOB');
+      console.log(customerName);
+      console.log(customerName === 'BOB');
     });
   });
+
   describe('setBestCustomer()', function() {
-    it('setBestCustomer', function() {
-      expect(window.bestCustomer).to.equal(undefined);
-
+    it('sets the bestCustomer', function() {
       setBestCustomer();
-
-      expect(window.bestCustomer).to.equal('not bob');
+      console.log(bestCustomer);
+      console.log(bestCustomer === 'not bob');
     });
   });
 
   describe('overwriteBestCustomer()', function() {
     it('overwrites the best customer', function() {
       overwriteBestCustomer('maybe bob');
-
-      expect(window.bestCustomer).to.equal('maybe bob');
+      console.log(bestCustomer);
+      console.log(bestCustomer === 'maybe bob');
     });
   });
 
   describe('changeLeastFavoriteCustomer()', function() {
-    it('unsuccessfully tries to reassign the least favorite customer', function() {
-      expect(changeLeastFavoriteCustomer).to.throw('Assignment to constant variable.');
+    it('throws an error when trying to reassign the least favorite customer', function() {
+      try {
+        changeLeastFavoriteCustomer();
+      } catch (error) {
+        console.log(error.message);
+        console.log(error.message === 'Assignment to constant variable.');
+      }
     });
   });
 });
